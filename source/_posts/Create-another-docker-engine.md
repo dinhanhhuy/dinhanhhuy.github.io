@@ -12,7 +12,7 @@ tags: [docker, linux]
 * Container image - split container image to a lot of reusable layer
 
 ### Storage binding
-Docker don't create thing out of thin air. Most of if magic is depends on [Linux namespace](https://en.wikipedia.org/wiki/Linux_namespaces). Mount namespace allows us to create a simulated, isolated storage space that other processes can use.
+Docker don't create thing out of thin air. Most of it's magic is depends on [Linux namespace](https://en.wikipedia.org/wiki/Linux_namespaces). Mount namespace allows us to create a simulated, isolated storage space that other processes can use.
 
 Here we create a new storage namespace so we can map it to our container later.
 <script src="https://gist.github.com/dinhanhhuy/b36e7e5e7aaf12f5262b82404085a5ae.js"></script>
