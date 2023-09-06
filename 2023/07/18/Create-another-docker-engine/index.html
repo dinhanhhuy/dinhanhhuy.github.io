@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="This blog explain how Docker work under the hood and from that we create a new similar tool.  What we cover here? Storage binding - mapping the storage from physical host to container Network mapping">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Create another Docker engine in 5 minute">
+<meta property="og:url" content="http://whiteballs.tech/2023/07/18/Create-another-docker-engine/index.html">
+<meta property="og:site_name" content="5 Minutes Clouding">
+<meta property="og:description" content="This blog explain how Docker work under the hood and from that we create a new similar tool.  What we cover here? Storage binding - mapping the storage from physical host to container Network mapping">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://whiteballs.tech/images/mocker/mocker-thumb.png">
+<meta property="og:image" content="http://whiteballs.tech/images/mocker/hash.png">
+<meta property="og:image" content="http://whiteballs.tech/images/mocker/mocker.png">
+<meta property="article:published_time" content="2023-07-18T17:57:30.000Z">
+<meta property="article:modified_time" content="2023-09-06T15:59:31.875Z">
+<meta property="article:author" content="https:&#x2F;&#x2F;t.me&#x2F;dinhanhhuy">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://whiteballs.tech/images/mocker/mocker-thumb.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Create another Docker engine in 5 minute</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+
+    
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- rss -->
+    
+    
+    <!-- jquery -->
+    
+<script src="/lib/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <div class="banner">
+<div id="blogtitel" class="blogtitel">5 Minutes Clouding</div>
+<ul id="wrapper" class="wrapper">
+  <div class="sun">
+    <div class="star"></div>
+  </div>
+  <div class="mercury">
+    <div class="planet">
+      <div class="shadow"></div>
+    </div>
+  </div>
+  <div class="venus">
+    <div class="planet">
+      <div class="shadow"></div>
+    </div>
+  </div>
+  <div class="earth">
+    <div class="planet"><div class="shadow"></div></div>
+  </div>
+  <div class="mars">
+    <div class="planet"><div class="shadow"></div></div>
+  </div>
+  <div class="jupiter">
+    <div class="planet"><div class="shadow"></div></div>
+  </div>
+</ul>
+</div>
+
+    <div class="background">
+      
+        <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/%C4%91inh-anh-huy-869b16115/">About</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2023/07/20/Debug-Kubernetes-Pod-in-5-minutes/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="/2023/05/24/Terraform-in-5-minutes/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://whiteballs.tech/2023/07/18/Create-another-docker-engine/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://whiteballs.tech/2023/07/18/Create-another-docker-engine/&text=Create another Docker engine in 5 minute"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://whiteballs.tech/2023/07/18/Create-another-docker-engine/&title=Create another Docker engine in 5 minute"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://whiteballs.tech/2023/07/18/Create-another-docker-engine/&is_video=false&description=Create another Docker engine in 5 minute"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Create another Docker engine in 5 minute&body=Check out this article: http://whiteballs.tech/2023/07/18/Create-another-docker-engine/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://whiteballs.tech/2023/07/18/Create-another-docker-engine/&title=Create another Docker engine in 5 minute"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://whiteballs.tech/2023/07/18/Create-another-docker-engine/&title=Create another Docker engine in 5 minute"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://whiteballs.tech/2023/07/18/Create-another-docker-engine/&title=Create another Docker engine in 5 minute"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://whiteballs.tech/2023/07/18/Create-another-docker-engine/&title=Create another Docker engine in 5 minute"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://whiteballs.tech/2023/07/18/Create-another-docker-engine/&name=Create another Docker engine in 5 minute&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-we-cover-here"><span class="toc-number">1.</span> <span class="toc-text">What we cover here?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Storage-binding"><span class="toc-number">1.1.</span> <span class="toc-text">Storage binding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Network-mapping"><span class="toc-number">1.2.</span> <span class="toc-text">Network mapping</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Container-image"><span class="toc-number">1.3.</span> <span class="toc-text">Container image</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Our-new-engine"><span class="toc-number">2.</span> <span class="toc-text">Our new engine</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+      
+      <div class="content index width mx-auto px2 my4">
+          
+          <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Create another Docker engine in 5 minute
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">5 Minutes Clouding</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2023-07-18T17:57:30.000Z" itemprop="datePublished">2023-07-18</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/docker/" rel="tag">docker</a>, <a class="tag-link-link" href="/tags/linux/" rel="tag">linux</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>This blog explain how Docker work under the hood and from that we create a new similar tool.<br><img src="/images/mocker/mocker-thumb.png"></p>
+</blockquote>
+<h2 id="What-we-cover-here"><a href="#What-we-cover-here" class="headerlink" title="What we cover here?"></a>What we cover here?</h2><ul>
+<li>Storage binding - mapping the storage from physical host to container</li>
+<li>Network mapping - mapping the network from container to physical host</li>
+<li>Container image - split container image to a lot of reusable layer</li>
+</ul>
+<h3 id="Storage-binding"><a href="#Storage-binding" class="headerlink" title="Storage binding"></a>Storage binding</h3><p>Docker don’t create thing out of thin air. Most of if magic is depends on <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Linux_namespaces">Linux namespace</a>. Mount namespace allows us to create a simulated, isolated storage space that other processes can use.</p>
+<p>Here we create a new storage namespace so we can map it to our container later.</p>
+<script src="https://gist.github.com/dinhanhhuy/b36e7e5e7aaf12f5262b82404085a5ae.js"></script>
+
+<h3 id="Network-mapping"><a href="#Network-mapping" class="headerlink" title="Network mapping"></a>Network mapping</h3><p>Similar with Storage binding, we create our network namespace with id “some-sql”</p>
+<script src="https://gist.github.com/dinhanhhuy/f2b21fcc305bd3b53f9085441ff94e31.js"></script>
+<p>To allow the MySQL instances running in the network namespaces can be access from the host, we will do the <a target="_blank" rel="noopener" href="https://github.com/zalopay-oss/mocker-k1s/blob/mocker-v1.0.0/mocker/network.sh#L18">network bridge here</a>. However, for the sake of our sanity, we will simply accept it as it is.</p>
+<h3 id="Container-image"><a href="#Container-image" class="headerlink" title="Container image"></a>Container image</h3><p>This feature don’t involve to Linux namespace. For each line of Dockerfile, we <a target="_blank" rel="noopener" href="https://github.com/zalopay-oss/mocker-k1s/blob/275d98f8474da4f789f1c8f569f56595f16fb114/mocker/mockerfile.sh#L4">hash the command string</a> to create the unique layer ID. If the layer already exist, we using cache instead of execute the build command</p>
+<p><img src="/images/mocker/hash.png"></p>
+<p style="text-align: center;">Calculate hash id of image layer</p>
+
+<p>* When start a new container, we simply copy all the files in the layer folder to the container storage namespace.</p>
+<h2 id="Our-new-engine"><a href="#Our-new-engine" class="headerlink" title="Our new engine"></a>Our new engine</h2><p>Start new sql process and attachs it to network &amp; mount namespace we have the final container<br><img src="/images/mocker/mocker.png"></p>
+<p style="text-align: center;">Start new process attached to 2 namespaces</p>
+Demo of our new engine on Linux server without Docker installed
+<script async id="asciicast-uUOjoz0e0oFdWdzFbljZfUATn" src="https://asciinema.org/a/uUOjoz0e0oFdWdzFbljZfUATn.js"></script>
+
+<p>For source code &amp; setup guidelines <a target="_blank" rel="noopener" href="https://github.com/zalopay-oss/mocker-k1s">come here</a></p>
+
+  </div>
+</article>
+
+
+
+      </div>
+      
+       <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/%C4%91inh-anh-huy-869b16115/">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-we-cover-here"><span class="toc-number">1.</span> <span class="toc-text">What we cover here?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Storage-binding"><span class="toc-number">1.1.</span> <span class="toc-text">Storage binding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Network-mapping"><span class="toc-number">1.2.</span> <span class="toc-text">Network mapping</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Container-image"><span class="toc-number">1.3.</span> <span class="toc-text">Container image</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Our-new-engine"><span class="toc-number">2.</span> <span class="toc-text">Our new engine</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://whiteballs.tech/2023/07/18/Create-another-docker-engine/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://whiteballs.tech/2023/07/18/Create-another-docker-engine/&text=Create another Docker engine in 5 minute"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://whiteballs.tech/2023/07/18/Create-another-docker-engine/&title=Create another Docker engine in 5 minute"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://whiteballs.tech/2023/07/18/Create-another-docker-engine/&is_video=false&description=Create another Docker engine in 5 minute"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Create another Docker engine in 5 minute&body=Check out this article: http://whiteballs.tech/2023/07/18/Create-another-docker-engine/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://whiteballs.tech/2023/07/18/Create-another-docker-engine/&title=Create another Docker engine in 5 minute"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://whiteballs.tech/2023/07/18/Create-another-docker-engine/&title=Create another Docker engine in 5 minute"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://whiteballs.tech/2023/07/18/Create-another-docker-engine/&title=Create another Docker engine in 5 minute"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://whiteballs.tech/2023/07/18/Create-another-docker-engine/&title=Create another Docker engine in 5 minute"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://whiteballs.tech/2023/07/18/Create-another-docker-engine/&name=Create another Docker engine in 5 minute&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+      
+      <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 https://t.me/dinhanhhuy
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/%C4%91inh-anh-huy-869b16115/">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+      
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'G-KMNFCF8CC2', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
+    </div>
+</body>
+</html>

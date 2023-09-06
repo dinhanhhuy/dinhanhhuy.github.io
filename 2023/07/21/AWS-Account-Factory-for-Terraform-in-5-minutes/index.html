@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="AWS Account Factory for Terraform (AFT) is feature of Control Tower that allows you to customize new and existing AWS accounts when provision their resources  Highlight featuresAWS AFT include over 3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS Account Factory for Terraform in 5 minutes">
+<meta property="og:url" content="http://whiteballs.tech/2023/07/21/AWS-Account-Factory-for-Terraform-in-5-minutes/index.html">
+<meta property="og:site_name" content="5 Minutes Clouding">
+<meta property="og:description" content="AWS Account Factory for Terraform (AFT) is feature of Control Tower that allows you to customize new and existing AWS accounts when provision their resources  Highlight featuresAWS AFT include over 3">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://whiteballs.tech/images/aft/AFT.png">
+<meta property="article:published_time" content="2023-07-21T13:07:34.000Z">
+<meta property="article:modified_time" content="2023-09-06T15:59:31.875Z">
+<meta property="article:author" content="https:&#x2F;&#x2F;t.me&#x2F;dinhanhhuy">
+<meta property="article:tag" content="aft">
+<meta property="article:tag" content="aws">
+<meta property="article:tag" content="terraform">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://whiteballs.tech/images/aft/AFT.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>AWS Account Factory for Terraform in 5 minutes</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+
+    
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- rss -->
+    
+    
+    <!-- jquery -->
+    
+<script src="/lib/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <div class="banner">
+<div id="blogtitel" class="blogtitel">5 Minutes Clouding</div>
+<ul id="wrapper" class="wrapper">
+  <div class="sun">
+    <div class="star"></div>
+  </div>
+  <div class="mercury">
+    <div class="planet">
+      <div class="shadow"></div>
+    </div>
+  </div>
+  <div class="venus">
+    <div class="planet">
+      <div class="shadow"></div>
+    </div>
+  </div>
+  <div class="earth">
+    <div class="planet"><div class="shadow"></div></div>
+  </div>
+  <div class="mars">
+    <div class="planet"><div class="shadow"></div></div>
+  </div>
+  <div class="jupiter">
+    <div class="planet"><div class="shadow"></div></div>
+  </div>
+</ul>
+</div>
+
+    <div class="background">
+      
+        <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/%C4%91inh-anh-huy-869b16115/">About</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2023/07/20/Debug-Kubernetes-Pod-in-5-minutes/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover='$("#i-next").toggle();' onmouseout='$("#i-next").toggle();'></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://whiteballs.tech/2023/07/21/AWS-Account-Factory-for-Terraform-in-5-minutes/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://whiteballs.tech/2023/07/21/AWS-Account-Factory-for-Terraform-in-5-minutes/&text=AWS Account Factory for Terraform in 5 minutes"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://whiteballs.tech/2023/07/21/AWS-Account-Factory-for-Terraform-in-5-minutes/&title=AWS Account Factory for Terraform in 5 minutes"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://whiteballs.tech/2023/07/21/AWS-Account-Factory-for-Terraform-in-5-minutes/&is_video=false&description=AWS Account Factory for Terraform in 5 minutes"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=AWS Account Factory for Terraform in 5 minutes&body=Check out this article: http://whiteballs.tech/2023/07/21/AWS-Account-Factory-for-Terraform-in-5-minutes/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://whiteballs.tech/2023/07/21/AWS-Account-Factory-for-Terraform-in-5-minutes/&title=AWS Account Factory for Terraform in 5 minutes"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://whiteballs.tech/2023/07/21/AWS-Account-Factory-for-Terraform-in-5-minutes/&title=AWS Account Factory for Terraform in 5 minutes"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://whiteballs.tech/2023/07/21/AWS-Account-Factory-for-Terraform-in-5-minutes/&title=AWS Account Factory for Terraform in 5 minutes"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://whiteballs.tech/2023/07/21/AWS-Account-Factory-for-Terraform-in-5-minutes/&title=AWS Account Factory for Terraform in 5 minutes"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://whiteballs.tech/2023/07/21/AWS-Account-Factory-for-Terraform-in-5-minutes/&name=AWS Account Factory for Terraform in 5 minutes&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Highlight-features"><span class="toc-number">1.</span> <span class="toc-text">Highlight features</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Manage-AWS-accounts"><span class="toc-number">1.1.</span> <span class="toc-text">Manage AWS accounts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Provision-TF-resources-in-all-accounts"><span class="toc-number">1.2.</span> <span class="toc-text">Provision TF resources in all accounts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Provision-TF-resources-in-customization-group"><span class="toc-number">1.3.</span> <span class="toc-text">Provision TF resources in customization group</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-4th-repo"><span class="toc-number">1.4.</span> <span class="toc-text">The 4th repo</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Inside-Blackbox"><span class="toc-number">2.</span> <span class="toc-text">Inside Blackbox</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+      
+      <div class="content index width mx-auto px2 my4">
+          
+          <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        AWS Account Factory for Terraform in 5 minutes
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">5 Minutes Clouding</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2023-07-21T13:07:34.000Z" itemprop="datePublished">2023-07-21</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/aft/" rel="tag">aft</a>, <a class="tag-link-link" href="/tags/aws/" rel="tag">aws</a>, <a class="tag-link-link" href="/tags/terraform/" rel="tag">terraform</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>AWS Account Factory for Terraform (AFT) is feature of Control Tower that allows you to customize new and existing AWS accounts when provision their resources</p>
+</blockquote>
+<h2 id="Highlight-features"><a href="#Highlight-features" class="headerlink" title="Highlight features"></a>Highlight features</h2><p>AWS AFT include over 30 AWS services (lambda, dynamo, etc…) so we treat it as a big blackbox that we never understand and keep ignoring. The GitOps part where we need focus are only 4 AWS Commit repositories that hanndle the “Factory” process of AWS Account.</p>
+<p><img src="/images/aft/AFT.png"></p>
+<p style="text-align: center;">GitOps provisioning resources for AWS account</p>
+
+<h3 id="Manage-AWS-accounts"><a href="#Manage-AWS-accounts" class="headerlink" title="Manage AWS accounts"></a>Manage AWS accounts</h3><p>The first repo <a target="_blank" rel="noopener" href="https://github.com/aws-ia/terraform-aws-control_tower_account_factory/tree/main/sources/aft-customizations-repos/aft-account-request">aft-account-request</a> that define the accounts as the following</p>
+<script src="https://gist.github.com/dinhanhhuy/93a6f5c6058206f810cd2c1b1d2a4c3d.js"></script>
+
+<h3 id="Provision-TF-resources-in-all-accounts"><a href="#Provision-TF-resources-in-all-accounts" class="headerlink" title="Provision TF resources in all accounts"></a>Provision TF resources in all accounts</h3><p>This repo <a target="_blank" rel="noopener" href="https://github.com/aws-ia/terraform-aws-control_tower_account_factory/tree/main/sources/aft-customizations-repos/aft-global-customizations">aft-global-customizations</a> define resources that will be created in all AWS accounts. Example a policy that don’t allow create S3 with public access in all accounts:</p>
+<script src="https://gist.github.com/dinhanhhuy/af03031015cc2810854f7e0535333df2.js"></script>
+
+<h3 id="Provision-TF-resources-in-customization-group"><a href="#Provision-TF-resources-in-customization-group" class="headerlink" title="Provision TF resources in customization group"></a>Provision TF resources in customization group</h3><p>This repo <a target="_blank" rel="noopener" href="https://github.com/aws-ia/terraform-aws-control_tower_account_factory/tree/main/sources/aft-customizations-repos/aft-account-customizations">aft-account-customizations</a> is a little tricky. It create resources for specific customizations group that map to a list of AWS accounts. We can see 2 folder <code>PRODUCTION</code> and <code>SANDBOX</code> represent for 2 customizations groups</p>
+<script src="https://gist.github.com/dinhanhhuy/4027f18c3f4048700ed4623e96e6a674.js"></script>
+<p>Any AWS account defined with attribute <code>account_customizations_name</code> equal to <code>SANDBOX</code> will have all resources in customizations groups <code>SANDBOX</code></p>
+<script src="https://gist.github.com/dinhanhhuy/bf2f01f821bbfa75a746408c89ecc855.js"></script>
+<p>Ex: we can setup something like monthly budget of $100 in <code>SANDBOX/terraform/main.tf</code> for all AWS accounts in group <code>SANDBOX</code></p>
+<h3 id="The-4th-repo"><a href="#The-4th-repo" class="headerlink" title="The 4th repo"></a>The 4th repo</h3><ul>
+<li>intern dude: What about repo <a target="_blank" rel="noopener" href="https://github.com/aws-ia/terraform-aws-control_tower_account_factory/tree/main/sources/aft-customizations-repos/aft-account-provisioning-customizations">aft-account-provisioning-customizations</a>?</li>
+<li>senior dude: Hell know, AWS say “When you need to setup custom, non-Terraform integrations before you provision your account, these can be included in the provisioning customization”. I never tested it my self so you can think it is one of your homework.</li>
+</ul>
+<h2 id="Inside-Blackbox"><a href="#Inside-Blackbox" class="headerlink" title="Inside Blackbox"></a>Inside Blackbox</h2><p>If you want to understand what really happens in AFT, come here and <a target="_blank" rel="noopener" href="https://github.com/aws-ia/terraform-aws-control_tower_account_factory">take a peek</a></p>
+
+  </div>
+</article>
+
+
+
+      </div>
+      
+       <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/%C4%91inh-anh-huy-869b16115/">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Highlight-features"><span class="toc-number">1.</span> <span class="toc-text">Highlight features</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Manage-AWS-accounts"><span class="toc-number">1.1.</span> <span class="toc-text">Manage AWS accounts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Provision-TF-resources-in-all-accounts"><span class="toc-number">1.2.</span> <span class="toc-text">Provision TF resources in all accounts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Provision-TF-resources-in-customization-group"><span class="toc-number">1.3.</span> <span class="toc-text">Provision TF resources in customization group</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-4th-repo"><span class="toc-number">1.4.</span> <span class="toc-text">The 4th repo</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Inside-Blackbox"><span class="toc-number">2.</span> <span class="toc-text">Inside Blackbox</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://whiteballs.tech/2023/07/21/AWS-Account-Factory-for-Terraform-in-5-minutes/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://whiteballs.tech/2023/07/21/AWS-Account-Factory-for-Terraform-in-5-minutes/&text=AWS Account Factory for Terraform in 5 minutes"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://whiteballs.tech/2023/07/21/AWS-Account-Factory-for-Terraform-in-5-minutes/&title=AWS Account Factory for Terraform in 5 minutes"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://whiteballs.tech/2023/07/21/AWS-Account-Factory-for-Terraform-in-5-minutes/&is_video=false&description=AWS Account Factory for Terraform in 5 minutes"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=AWS Account Factory for Terraform in 5 minutes&body=Check out this article: http://whiteballs.tech/2023/07/21/AWS-Account-Factory-for-Terraform-in-5-minutes/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://whiteballs.tech/2023/07/21/AWS-Account-Factory-for-Terraform-in-5-minutes/&title=AWS Account Factory for Terraform in 5 minutes"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://whiteballs.tech/2023/07/21/AWS-Account-Factory-for-Terraform-in-5-minutes/&title=AWS Account Factory for Terraform in 5 minutes"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://whiteballs.tech/2023/07/21/AWS-Account-Factory-for-Terraform-in-5-minutes/&title=AWS Account Factory for Terraform in 5 minutes"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://whiteballs.tech/2023/07/21/AWS-Account-Factory-for-Terraform-in-5-minutes/&title=AWS Account Factory for Terraform in 5 minutes"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://whiteballs.tech/2023/07/21/AWS-Account-Factory-for-Terraform-in-5-minutes/&name=AWS Account Factory for Terraform in 5 minutes&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+      
+      <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 https://t.me/dinhanhhuy
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/%C4%91inh-anh-huy-869b16115/">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+      
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'G-KMNFCF8CC2', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Terraform is a tool help user define infrastructure as code (IAC).  Fundamental - All tiers featuresCreate cloud resource Terraform architecture   developer: I need to create an ec2.  developer: *pre">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Terraform in 5 minutes">
+<meta property="og:url" content="http://whiteballs.tech/2023/05/24/Terraform-in-5-minutes/index.html">
+<meta property="og:site_name" content="5 Minutes Clouding">
+<meta property="og:description" content="Terraform is a tool help user define infrastructure as code (IAC).  Fundamental - All tiers featuresCreate cloud resource Terraform architecture   developer: I need to create an ec2.  developer: *pre">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://whiteballs.tech/images/terraform-in-5-minutes/tfc-flow.png">
+<meta property="og:image" content="http://whiteballs.tech/images/terraform-in-5-minutes/tr-cloud.png">
+<meta property="article:published_time" content="2023-05-24T12:01:36.000Z">
+<meta property="article:modified_time" content="2023-09-06T15:59:31.875Z">
+<meta property="article:author" content="https:&#x2F;&#x2F;t.me&#x2F;dinhanhhuy">
+<meta property="article:tag" content="terraform">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://whiteballs.tech/images/terraform-in-5-minutes/tfc-flow.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Terraform in 5 minutes</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+
+    
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- rss -->
+    
+    
+    <!-- jquery -->
+    
+<script src="/lib/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <div class="banner">
+<div id="blogtitel" class="blogtitel">5 Minutes Clouding</div>
+<ul id="wrapper" class="wrapper">
+  <div class="sun">
+    <div class="star"></div>
+  </div>
+  <div class="mercury">
+    <div class="planet">
+      <div class="shadow"></div>
+    </div>
+  </div>
+  <div class="venus">
+    <div class="planet">
+      <div class="shadow"></div>
+    </div>
+  </div>
+  <div class="earth">
+    <div class="planet"><div class="shadow"></div></div>
+  </div>
+  <div class="mars">
+    <div class="planet"><div class="shadow"></div></div>
+  </div>
+  <div class="jupiter">
+    <div class="planet"><div class="shadow"></div></div>
+  </div>
+</ul>
+</div>
+
+    <div class="background">
+      
+        <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/%C4%91inh-anh-huy-869b16115/">About</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2023/07/18/Create-another-docker-engine/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover='$("#i-prev").toggle();' onmouseout='$("#i-prev").toggle();'></i></a></li>
+        
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover='$("#i-top").toggle();' onmouseout='$("#i-top").toggle();'></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover='$("#i-share").toggle();' onmouseout='$("#i-share").toggle();' onclick='$("#share").toggle();return false;'></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://whiteballs.tech/2023/05/24/Terraform-in-5-minutes/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://whiteballs.tech/2023/05/24/Terraform-in-5-minutes/&text=Terraform in 5 minutes"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://whiteballs.tech/2023/05/24/Terraform-in-5-minutes/&title=Terraform in 5 minutes"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://whiteballs.tech/2023/05/24/Terraform-in-5-minutes/&is_video=false&description=Terraform in 5 minutes"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Terraform in 5 minutes&body=Check out this article: http://whiteballs.tech/2023/05/24/Terraform-in-5-minutes/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://whiteballs.tech/2023/05/24/Terraform-in-5-minutes/&title=Terraform in 5 minutes"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://whiteballs.tech/2023/05/24/Terraform-in-5-minutes/&title=Terraform in 5 minutes"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://whiteballs.tech/2023/05/24/Terraform-in-5-minutes/&title=Terraform in 5 minutes"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://whiteballs.tech/2023/05/24/Terraform-in-5-minutes/&title=Terraform in 5 minutes"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://whiteballs.tech/2023/05/24/Terraform-in-5-minutes/&name=Terraform in 5 minutes&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Fundamental-All-tiers-features"><span class="toc-number">1.</span> <span class="toc-text">Fundamental - All tiers features</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-cloud-resource"><span class="toc-number">1.1.</span> <span class="toc-text">Create cloud resource</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Detect-config-driff"><span class="toc-number">1.2.</span> <span class="toc-text">Detect config driff</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Terraform-Enterprise-Cloud-features"><span class="toc-number">2.</span> <span class="toc-text">Terraform Enterprise &amp; Cloud features</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Policy-as-code-Sentinel"><span class="toc-number">2.1.</span> <span class="toc-text">Policy as code - Sentinel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cost-estimation"><span class="toc-number">2.2.</span> <span class="toc-text">Cost estimation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-GUI"><span class="toc-number">2.3.</span> <span class="toc-text">The GUI</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-minute-already"><span class="toc-number">3.</span> <span class="toc-text">5 minute already!</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+      
+      <div class="content index width mx-auto px2 my4">
+          
+          <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Terraform in 5 minutes
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">5 Minutes Clouding</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2023-05-24T12:01:36.000Z" itemprop="datePublished">2023-05-24</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/terraform/" rel="tag">terraform</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>Terraform is a tool help user define infrastructure as code (IAC).</p>
+</blockquote>
+<h2 id="Fundamental-All-tiers-features"><a href="#Fundamental-All-tiers-features" class="headerlink" title="Fundamental - All tiers features"></a>Fundamental - All tiers features</h2><h3 id="Create-cloud-resource"><a href="#Create-cloud-resource" class="headerlink" title="Create cloud resource"></a>Create cloud resource</h3><p><img src="/images/terraform-in-5-minutes/tfc-flow.png"></p>
+<p style="text-align: center;">Terraform architecture</p>
+
+<ul>
+<li>developer: I need to create an ec2. <script src="https://gist.github.com/dinhanhhuy/246a7424d3c033414528a4fb992e6d70.js"></script></li>
+<li>developer: *press enter* Do it! (1)<script src="https://gist.github.com/dinhanhhuy/9a435a8a156022a106b6247c04afa296.js"></script></li>
+<li>terraform: call AWS API to create a new EC2 instance (2)<script src="https://gist.github.com/dinhanhhuy/dc9537cc4d750b395308a448d9411e55.js"></script></li>
+<li>terraform: write that down, state! (3)<script src="https://gist.github.com/dinhanhhuy/eeb8feebad0b4eae1bddcd5abb89861a.js"></script></li>
+</ul>
+<h3 id="Detect-config-driff"><a href="#Detect-config-driff" class="headerlink" title="Detect config driff"></a>Detect config driff</h3><ul>
+<li>other dude using aws console: what is this ec2? rename it!<script src="https://gist.github.com/dinhanhhuy/0ceb3d1a7d68229b337a4365d59e5fe0.js"></script></li>
+<li>terraform: compare aws live data with state to check if anything still good<script src="https://gist.github.com/dinhanhhuy/7b464880cd44530b5a605d4812c66446.js"></script>
+Ops, some one changed something, do you want me revert?</li>
+</ul>
+<h2 id="Terraform-Enterprise-Cloud-features"><a href="#Terraform-Enterprise-Cloud-features" class="headerlink" title="Terraform Enterprise &amp; Cloud features"></a>Terraform Enterprise &amp; Cloud features</h2><h3 id="Policy-as-code-Sentinel"><a href="#Policy-as-code-Sentinel" class="headerlink" title="Policy as code - Sentinel"></a>Policy as code - Sentinel</h3><ul>
+<li>intern dude: *panic* some one updated the network ACL allow access from IP range 0.0.0.0&#x2F;0!</li>
+<li>senior dude: use sentinel to prevent that happen again?<script src="https://gist.github.com/dinhanhhuy/19b23d2e7ab9ada1afffa35b5d388f4e.js"></script></li>
+</ul>
+<h3 id="Cost-estimation"><a href="#Cost-estimation" class="headerlink" title="Cost estimation"></a>Cost estimation</h3><ul>
+<li>senior dude: @intern dude, we gonna bankrupt if you push this!<script src="https://gist.github.com/dinhanhhuy/556500d92ef12ea201a52543ff2e8c40.js"></script></li>
+<li>senior dude: *muttered* gonna create sentiel rule to limit cost of this project.</li>
+</ul>
+<h3 id="The-GUI"><a href="#The-GUI" class="headerlink" title="The GUI"></a>The GUI</h3><ul>
+<li>intern dude: *panic* i never touch the terminal before in my life</li>
+<li>senior dude: this may help<br><img src="/images/terraform-in-5-minutes/tr-cloud.png"></li>
+</ul>
+<h2 id="5-minute-already"><a href="#5-minute-already" class="headerlink" title="5 minute already!"></a>5 minute already!</h2><p>Terraform is a great tool with a lot of features &amp; and a lot of bugs <a target="_blank" rel="noopener" href="https://github.com/hashicorp/terraform/issues">(1,698 open&#x2F;18,245 closed)</a>. Find out more about <i class="fa fa-tag"></i> <a href="http://whiteballs.tech/tags/terraform/">terraform</a>!</p>
+
+  </div>
+</article>
+
+
+
+      </div>
+      
+       <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/%C4%91inh-anh-huy-869b16115/">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Fundamental-All-tiers-features"><span class="toc-number">1.</span> <span class="toc-text">Fundamental - All tiers features</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-cloud-resource"><span class="toc-number">1.1.</span> <span class="toc-text">Create cloud resource</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Detect-config-driff"><span class="toc-number">1.2.</span> <span class="toc-text">Detect config driff</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Terraform-Enterprise-Cloud-features"><span class="toc-number">2.</span> <span class="toc-text">Terraform Enterprise &amp; Cloud features</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Policy-as-code-Sentinel"><span class="toc-number">2.1.</span> <span class="toc-text">Policy as code - Sentinel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cost-estimation"><span class="toc-number">2.2.</span> <span class="toc-text">Cost estimation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-GUI"><span class="toc-number">2.3.</span> <span class="toc-text">The GUI</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-minute-already"><span class="toc-number">3.</span> <span class="toc-text">5 minute already!</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://whiteballs.tech/2023/05/24/Terraform-in-5-minutes/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://whiteballs.tech/2023/05/24/Terraform-in-5-minutes/&text=Terraform in 5 minutes"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://whiteballs.tech/2023/05/24/Terraform-in-5-minutes/&title=Terraform in 5 minutes"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://whiteballs.tech/2023/05/24/Terraform-in-5-minutes/&is_video=false&description=Terraform in 5 minutes"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Terraform in 5 minutes&body=Check out this article: http://whiteballs.tech/2023/05/24/Terraform-in-5-minutes/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://whiteballs.tech/2023/05/24/Terraform-in-5-minutes/&title=Terraform in 5 minutes"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://whiteballs.tech/2023/05/24/Terraform-in-5-minutes/&title=Terraform in 5 minutes"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://whiteballs.tech/2023/05/24/Terraform-in-5-minutes/&title=Terraform in 5 minutes"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://whiteballs.tech/2023/05/24/Terraform-in-5-minutes/&title=Terraform in 5 minutes"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://whiteballs.tech/2023/05/24/Terraform-in-5-minutes/&name=Terraform in 5 minutes&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick='$("#toc-footer").toggle();return false;'><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick='$("#share-footer").toggle();return false;'><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick='$("#nav-footer").toggle();return false;'><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+      
+      <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 https://t.me/dinhanhhuy
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://www.linkedin.com/in/%C4%91inh-anh-huy-869b16115/">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+      
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'G-KMNFCF8CC2', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
+    </div>
+</body>
+</html>
