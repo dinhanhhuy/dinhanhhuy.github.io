@@ -8,9 +8,6 @@ on:
 jobs:
   pages:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./source
     permissions:
       contents: write
     steps:
