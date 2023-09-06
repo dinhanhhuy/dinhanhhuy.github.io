@@ -8,8 +8,9 @@ on:
 jobs:
   pages:
     runs-on: ubuntu-latest
-    env:
-      working-directory: ./source
+    defaults:
+      run:
+        working-directory: ./source
     permissions:
       contents: write
     steps:
@@ -29,8 +30,6 @@ jobs:
           key: ${{ runner.OS }}-npm-cache
           restore-keys: |
             ${{ runner.OS }}-npm-cache
-      - name: Set work dir
-        run: cd ./source
       - name: Install Dependencies
         run: npm install
       - name: Build
