@@ -1,0 +1,12 @@
+/* https://github.com/lonekorean/gist-syntax-themes */
+@import url('https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css');
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+.gist .gist-meta {
+  padding: 10px;
+  overflow: hidden;
+  font: 12px -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+  color: var(--color-fg-muted);
+  background-color: #272822!;
+  border-radius: 0 0 6px 6px;
+}
